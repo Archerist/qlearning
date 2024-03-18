@@ -5,9 +5,9 @@ class Program
     static void Main(string[] args)
     {
         State startState = new State();
-        State endState = new State(3, 5);
-        int n = 10;
-        float startEpsilon = 0.3f;
+        State endState = new State(20,20);
+        int n = 30;
+        float startEpsilon = 0.00001f;
         bool linearEpsilon = false;
         float stopEpsilon = 0.00003f;
 
@@ -29,6 +29,7 @@ class Program
         Agent agent = new Agent(startState,startAlpha, startEpsilon, startGamma);
         Environment env = new Environment(n,rewards);
         string lastEpResult ="";
+        string steps ="";
         for (int e = 0; e < episodes; e++)
         {   
             if(linearEpsilon){
@@ -57,6 +58,7 @@ class Program
 
             }
             Console.WriteLine("Steps taking this episode: {0}", stepPerCycle);
+            steps += stepPerCycle + "\n";
             string qvalOutput ="";
             qvalOutput += "(X,Y); Action; Q\n";
             foreach (var qvalue in agent.qvalues)
@@ -73,7 +75,8 @@ class Program
 
             continue;
         }
-            File.WriteAllText("./lastEpresult.csv", lastEpResult);
+            File.WriteAllText("./out/lastEpresult.csv", lastEpResult);
+            File.WriteAllText("./out/Steps.csv", steps);
 
         return;
 

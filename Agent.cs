@@ -25,7 +25,6 @@ class Agent
 
         float randomFloat = (float)randomizer.NextDouble();
         Action action = randomFloat < epsilon ? selectRandomAction() : selectAction();
-        Console.WriteLine("Selected Action: {0}", action.ToString());
         switch (action)
         {
             case Action.UP:
@@ -53,7 +52,7 @@ class Agent
         Action action;
         try
         {
-            action = qvalues.Where(QValue => QValue.state == currentPos).OrderByDescending(QValue => QValue.Q).First().action;
+            action = qvalues.Where(QValue => QValue.state == currentPos && QValue.Q != 0).OrderByDescending(QValue => QValue.Q).First().action;
         }
         catch
         {

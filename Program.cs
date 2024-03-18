@@ -7,12 +7,17 @@ class Program
         State startState = new State();
         State endState = new State(3, 5);
         int n = 10;
-        float epsilon = 0.3f;
+        float startEpsilon = 0.3f;
         bool linearEpsilon = false;
-        float alpha = 0.7f;
+        float stopEpsilon = 0.00003f;
+
+        float startAlpha = 0.7f;
         bool linearAlpha = false;
-        float gamma = 0.96f;
+        float stopAlpha = 0.00003f;
+        
+        float startGamma = 0.96f;
         bool linearGamma = false;
+        float stopGamma = 0.00003f;
 
         int maxSteps = 1000;
         int episodes = 100;
@@ -21,22 +26,22 @@ class Program
         ];
 
 
-        Agent agent = new Agent(startState,alpha, epsilon, gamma);
+        Agent agent = new Agent(startState,startAlpha, startEpsilon, startGamma);
         Environment env = new Environment(n,rewards);
         string lastEpResult ="";
         for (int e = 0; e < episodes; e++)
         {   
             if(linearEpsilon){
-                var currentEpsilon = LinearDecrease(epsilon,0,episodes, e);
+                var currentEpsilon = LinearDecrease(startEpsilon,stopEpsilon,episodes, e);
                 agent.epsilon = currentEpsilon;
             }
 
             if(linearAlpha){
-                var currentAlpha = LinearDecrease(alpha,0,episodes, e);
+                var currentAlpha = LinearDecrease(startAlpha,stopAlpha,episodes, e);
                 agent.epsilon = currentAlpha;
             }
             if(linearGamma){
-                var currentGamma = LinearDecrease(gamma,0,episodes, e);
+                var currentGamma = LinearDecrease(startGamma,stopGamma,episodes, e);
                 agent.epsilon = currentGamma;
             }
 
